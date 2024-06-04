@@ -5,10 +5,12 @@ defmodule ElixirGist.Gists.Gist do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "gists" do
+    belongs_to :user, ElixirGist.Accounts.User
+    has_many :comments, ElixirGist.Comments.Comment
+
     field :name, :string
     field :description, :string
     field :markup_text, :string
-    field :user_id, :binary_id
 
     timestamps()
   end
@@ -16,7 +18,7 @@ defmodule ElixirGist.Gists.Gist do
   @doc false
   def changeset(gist, attrs) do
     gist
-    |> cast(attrs, [:name, :description, :markup_text])
-    |> validate_required([:name, :description, :markup_text])
+    |> cast(attrs, [:name, :description, :markup_text, :user_id])
+    |> validate_required([:name, :description, :markup_text, :user_id])
   end
 end

@@ -16,6 +16,9 @@
 //
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
+
+import hljs from "highlight.js";
+
 import "phoenix_html";
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
@@ -27,6 +30,47 @@ let csrfToken = document
   .getAttribute("content");
 
 let Hooks = {};
+
+Hooks.Highlight = {
+  mounted() {
+    let codeBlock = this.el.querySelector("pre code");
+    let name = this.el.getAttribute("data-name");
+    if (name && codeBlock) {
+      codeBlock.className = codeBlock.className.replace(/language-\S+/g, "");
+      codeBlock.classList.add(`language-${this.getSystaxType(name)}`);
+
+      hljs.highlightElement(codeBlock);
+    }
+  },
+
+  getSystaxType(name) {
+    let extension = name.split(".").pop();
+    switch (extension) {
+      case "js":
+        return "javascript";
+      case "py":
+        return "python";
+      case "rs":
+        return "rust";
+      case "ex":
+        return "elixir";
+      case "rb":
+        return "ruby";
+      case "txt":
+        return "text";
+      case "heex":
+        return "html";
+      case "html":
+        return "html";
+      case "erb":
+        return "html";
+      case "json":
+        return "json";
+      default:
+        return "elixir";
+    }
+  },
+};
 
 Hooks.UpdateLineNumbers = {
   mounted() {

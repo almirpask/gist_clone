@@ -11,7 +11,6 @@
   font-style: normal;
 }
 
-
 @font-face {
   font-family: "WorkSans";
   src: url("/fonts/WorkSans-Bold.ttf");
@@ -19,8 +18,14 @@
   font-style: bold;
 }
 
-.em-gradient{
-  background-image: linear-gradient(to bottom, #631A61, #551653, #340e33, #010101);
+.em-gradient {
+  background-image: linear-gradient(
+    to bottom,
+    #631a61,
+    #551653,
+    #340e33,
+    #010101
+  );
   height: 225px;
 }
 
@@ -36,26 +41,37 @@
 }
 
 .menu-item {
-  @apply block px-4 py-2 text-sm text-white font-brand font-regular
+  @apply block px-4 py-2 text-sm text-white font-brand font-regular;
 }
 
 .menu-item :hover {
-  @apply hover:text-emDark-ligth
+  @apply hover:text-emDark-ligth;
 }
 
 form input[type="text"] {
-  @apply bg-emDark-dark font-brand font-regular text-white text-xs border border-white
+  @apply bg-emDark-dark font-brand font-regular text-white text-xs border border-white;
 }
 form input[type="text"]:focus {
-  @apply focus:outline-none focus:border-emLavender focus:ring-0
+  @apply focus:outline-none focus:border-emLavender focus:ring-0;
 }
 
 .textarea {
   @apply bg-emDark-dark font-brand font-regular text-white text-xs border border-white h-[300px] resize-none;
   border-top: none;
+  border-left: none;
 }
-.textarea:focus{
-  @apply focus:outline-none focus:border-white focus:ring-0
+.textarea:focus {
+  @apply focus:outline-none focus:border-white focus:ring-0;
+}
+
+.line-numbers {
+  @apply border border-white font-brand font-regular text-xs text-emDark-ligth bg-emDark-dark h-[300px] w-[54px] text-right overflow-hidden resize-none;
+  border-right: none;
+  border-top: none;
+}
+
+.line-numbers:focus {
+  @apply focus:outline-none focus:border-white focus:ring-0;
 }
 
 .create_button {
@@ -68,7 +84,7 @@ form input[type="text"]:focus {
 
 .round-image-padding {
   border-radius: 50%;
-  border: 1.5px solid #FFFFFF;
+  border: 1.5px solid #ffffff;
   padding: 4px;
 }
 
@@ -82,5 +98,3 @@ form input[type="text"]:focus {
   border-color: white transparent transparent transparent;
   border-style: solid;
 }
-
-

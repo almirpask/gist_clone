@@ -48,6 +48,7 @@ Hooks.Highlight = {
       codeBlock.classList.add(`language-${this.getSystaxType(name)}`);
 
       hljs.highlightElement(codeBlock);
+      updateLineNumbers(codeBlock.textContent);
     }
   },
 

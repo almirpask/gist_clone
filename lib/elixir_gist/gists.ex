@@ -80,11 +80,11 @@ defmodule ElixirGist.Gists do
 
   ## Examples
 
-      iex> delete_gist(gist)
+      iex> delete_gist(%User{}, id)
       {:ok, %Gist{}}
 
-      iex> delete_gist(gist)
-      {:error, %Ecto.Changeset{}}
+      iex> delete_gist(%User{}, id)
+      {:error, :unauthorized}
 
   """
   def delete_gist(%User{} = user, gist_id) do

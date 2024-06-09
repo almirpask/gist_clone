@@ -29,6 +29,14 @@ let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 
+function updateLineNumbers(value) {
+  const lineNumberText = document.querySelector("#line-numbers");
+  if (!lineNumberText) return;
+  const lines = value.split("\n");
+  const numbers = lines.map((_, index) => index + 1).join("\n") + "\n";
+  lineNumberText.value = numbers;
+}
+
 let Hooks = {};
 
 Hooks.Highlight = {
@@ -76,7 +84,7 @@ Hooks.UpdateLineNumbers = {
   mounted() {
     const lineNumberText = document.querySelector("#line-numbers");
     this.el.addEventListener("input", () => {
-      this.updateLineNumbers();
+      updateLineNumbers(this.el.value);
     });
 
     this.el.addEventListener("scroll", () => {
@@ -103,15 +111,7 @@ Hooks.UpdateLineNumbers = {
       lineNumberText.value = "1\n";
     });
 
-    this.updateLineNumbers();
-  },
-
-  updateLineNumbers() {
-    const lineNumberText = document.querySelector("#line-numbers");
-    if (!lineNumberText) return;
-    const lines = this.el.value.split("\n");
-    const numbers = lines.map((_, index) => index + 1).join("\n") + "\n";
-    lineNumberText.value = numbers;
+    updateLineNumbers(this.el.value);
   },
 };
 

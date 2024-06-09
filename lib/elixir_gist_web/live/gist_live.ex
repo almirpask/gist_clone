@@ -5,7 +5,10 @@ defmodule ElixirGistWeb.GistLive do
 
   def mount(%{"id" => id}, _session, socket) do
     gist = Gists.get_gist!(id)
-    {:ok, assign(socket, gist: gist)}
+
+    {:ok, relative_time } = Timex.format(gist.updated_at, "{relative}", :relative)
+    gist = Map.put(gist, :relative, relative_time)
+    {:ok, assign(socket, gist: gist )}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do

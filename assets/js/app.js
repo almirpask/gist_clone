@@ -127,6 +127,24 @@ Hooks.UpdateLineNumbers = {
   },
 };
 
+Hooks.CopyToClipboard = {
+  mounted() {
+    this.el.addEventListener("click", () => {
+      const textToCopy = this.el.getAttribute("data-clipboard-gist");
+      if (!textToCopy) return;
+
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          console.log("Gist copied to clipboard");
+        })
+        .catch((err) => {
+          console.log("Failed to copy gist to clipboard: ", err);
+        });
+    });
+  },
+};
+
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: Hooks,

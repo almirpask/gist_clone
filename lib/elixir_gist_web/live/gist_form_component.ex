@@ -24,7 +24,7 @@
                 <.input field={@form[:name]} placeholder="Filename incluing extension..." autocomplete="off"}  phx-debounce="blur"/>
               </div>
             </div>
-            <div id="gist-wrapper" class="flex w-full" phx-update="ignore">
+            <div id="gist-wrapper-form" class="flex w-full" phx-update="ignore">
               <textarea id="line-numbers" class="line-numbers rounded-bl-md" readonly>
                 <%= "1\n" %>
               </textarea>
@@ -76,11 +76,10 @@
   def handle_event("update", %{"gist" => params}, socket) do
     case Gists.update_gist(socket.assigns.current_user, params) do
       {:ok, gist} ->
-        changeset = Gists.change_gist(gist)
-        socket = assign(socket, form: to_form(changeset))
-        {:noreply, push_navigate(socket, to: ~p"/gist?#{[id: gist]}")}
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, form: to_form(changeset))}
+        {:noreply, push_patch(socket, to: ~p"/gist?#{[id: gist]}")}
+      {:error, message} ->
+        socket = put_flash(socket, :error, "Failed to update gist: #{message}")
+        {:noreply, socket}
     end
   end
  end

@@ -29,8 +29,8 @@ let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
 
-function updateLineNumbers(value) {
-  const lineNumberText = document.querySelector("#line-numbers");
+function updateLineNumbers(value, element_id = "#line-numbers") {
+  const lineNumberText = document.querySelector(element_id);
   if (!lineNumberText) return;
   const lines = value.split("\n");
   const numbers = lines.map((_, index) => index + 1).join("\n") + "\n";
@@ -48,7 +48,7 @@ Hooks.Highlight = {
       codeBlock.classList.add(`language-${this.getSystaxType(name)}`);
       trimmed = this.trimCodeBlock(codeBlock);
       hljs.highlightElement(trimmed);
-      updateLineNumbers(trimmed.textContent);
+      updateLineNumbers(trimmed.textContent, "#syntax-numbers");
     }
   },
 

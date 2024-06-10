@@ -27,16 +27,18 @@
               <textarea id="line-numbers" class="line-numbers rounded-bl-md" readonly>
                 <%= "1\n" %>
               </textarea>
-              <.input
-                type="textarea"
-                field={@form[:markup_text]}
-                phx-hook= "UpdateLineNumbers"
-                class= "w-full rounded-br-md textarea"
-                placeholder= "Insert code..."
-                spellcheck= "false"
-                autocomplete= "false"
-                phx-debounce= "blur"
-              ></.input>
+              <div class="flex-grow">
+                <.input
+                  type="textarea"
+                  field={@form[:markup_text]}
+                  phx-hook= "UpdateLineNumbers"
+                  class= "w-full rounded-br-md textarea"
+                  placeholder= "Insert code..."
+                  spellcheck= "false"
+                  autocomplete= "false"
+                  phx-debounce= "blur"
+                />
+              </div>
             </div>
           </div>
           <div class="flex justify-end">

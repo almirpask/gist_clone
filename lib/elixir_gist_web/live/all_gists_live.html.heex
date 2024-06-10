@@ -1,0 +1,9 @@
+<div class="em-gradient flex flex-items-center justify-center">
+  <div class="font-brand font-bold text-3xl text-white">
+    All Gists
+  </div>
+</div>
+<%= for gist <- @gists do %>
+  <.gist gist={gist} current_user={@current_user}/>
+  <hr/>
+<% end %>

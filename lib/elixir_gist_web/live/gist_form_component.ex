@@ -1,6 +1,5 @@
  defmodule ElixirGistWeb.GistFormComponent do
    use ElixirGistWeb, :live_component
-   import Phoenix.HTML.Form
 
    alias ElixirGist.{Gists, Gists.Gist}
    @spec mount(any()) :: {:ok, any()}
@@ -12,7 +11,7 @@
   def render(assigns) do
     ~H"""
     <div>
-    <.form for{@form} phx-submit={@action} phx-change="validate" phx-target={@myself} >
+    <.form for={@form} phx-submit={@action} phx-change="validate" phx-target={@myself} >
         <div class="justify-center px-28 w-full space-y-4 mb-10">
           <%= if @action == "update" do %>
             <.input field={@form[:id] } type="hidden"/>
@@ -21,28 +20,29 @@
           <div>
             <div class="flex p-2 items-center bg-emDark rounded-t-md border">
               <div class="w-[300px] mb-2">
-                <.input field={@form[:name]} placeholder="Filename incluing extension..." autocomplete="off"}  phx-debounce="blur"/>
+                <.input field={@form[:name]} placeholder="Filename incluing extension..." autocomplete="off"  phx-debounce="blur"/>
               </div>
             </div>
             <div id="gist-wrapper-form" class="flex w-full" phx-update="ignore">
               <textarea id="line-numbers" class="line-numbers rounded-bl-md" readonly>
                 <%= "1\n" %>
               </textarea>
-              <%= textarea(@form, :markup_text,
-                id: "gist-textarea",
-                phx_hook: "UpdateLineNumbers",
-                class: "w-full rounded-br-md textarea",
-                placeholder: "Insert code...",
-                spellcheck: "false",
-                autocomplete: "false",
-                phx_debounce: "blur"
-              )%>
+              <.input
+                type="textarea"
+                field={@form[:markup_text]}
+                phx-hook= "UpdateLineNumbers"
+                class= "w-full rounded-br-md textarea"
+                placeholder= "Insert code..."
+                spellcheck= "false"
+                autocomplete= "false"
+                phx-debounce= "blur"
+              ></.input>
             </div>
           </div>
           <div class="flex justify-end">
             <%= if @action == "update" do %>
               <.button class="create_button" phx-disable-with="Updating...">Update gist</.button>
-            <%= else %>
+            <% else %>
               <.button class="create_button" phx-disable-with="Creating...">Create gist</.button>
             <%end %>
           </div>
@@ -76,7 +76,7 @@
   def handle_event("update", %{"gist" => params}, socket) do
     case Gists.update_gist(socket.assigns.current_user, params) do
       {:ok, gist} ->
-        {:noreply, push_patch(socket, to: ~p"/gist?#{[id: gist]}")}
+        {:noreply, push_navigate(socket, to: ~p"/gist?#{[id: gist]}")}
       {:error, message} ->
         socket = put_flash(socket, :error, "Failed to update gist: #{message}")
         {:noreply, socket}

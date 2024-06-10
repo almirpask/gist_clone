@@ -145,6 +145,19 @@ Hooks.CopyToClipboard = {
   },
 };
 
+Hooks.TogleEdit = {
+  mounted() {
+    this.el.addEventListener("click", () => {
+      let edit = document.getElementById("edit-section");
+      let syntax = document.getElementById("syntax-section");
+      if (edit && syntax) {
+        edit.style.display = "block";
+        syntax.style.display = "none";
+      }
+    });
+  },
+};
+
 let liveSocket = new LiveSocket("/live", Socket, {
   params: { _csrf_token: csrfToken },
   hooks: Hooks,
